@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" >
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,31 +17,66 @@
         <link rel="stylesheet" href="assets/css/plugins.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="assets/angularjs/angular.min.js"></script>
+        
+        <script type="text/javascript">
+        var app=angular.module('qianguoyuan',[]);//定义模块	
+		app.controller('categoryController' ,function($scope,$http){
+			
+	        //读取列表数据绑定到表单中  
+			$scope.findAllCategory=function(){
+				$http.get('/Category/findAllCategory').success(
+					function(response){
+						$scope.list=response;
+					}			
+				);
+			}
+	        
+	        
+		});	
+
+        </script>
+        
+       
     </head>
-    <body>
+    <body ng-app="qianguoyuan"  ng-init="findAllCategory()" ng-controller="categoryController">
         
         <!-- Header Area Start -->
         <header class="header-area header-sticky header-three-area">
             <div class="header-container">
                 <div class="row">
                     <div class="col-lg-5 display-none-md display-none-xs">
-                        <div class="ht-main-menu">
+                        <div class="ht-main-menu" >
                             <nav>
                                 <ul>
                                     <li class="active"><a href="index.html">首页</a>
-                                        <ul>
-                                            <li><a href="index.html">首页</a></li>                                          
-                                        </ul>
                                     </li>
                                     <li><a href="shop.html">分类<i class="fa fa-angle-down"></i></a>
                                         <ul class="ht-mega-menu">
                                             <li>
-                                                <ul>
-                                                    <li class="mega-menu-title">核果类</li>
-                                                    <li><a href="shop.html">桃</a></li>
+                                                <ul ng-controller="categoryController">
+                                                   <!--  <li class="mega-menu-title">{{entity.name}}</li> -->
+                                                  <!--   <li><a href="shop.html">桃</a></li>
                                                     <li><a href="shop.html">杏</a></li>
                                                     <li><a href="shop.html">李、</a></li>
-                                                    <li><a href="shop.html">樱桃</a></li>
+                                                    <li><a href="shop.html">樱桃</a></li> -->
+                                                   
+                                                       <table class="table table-striped" >
+																	   <thead >
+																	      <tr>
+																	         <th>类名</th>
+																	         <th>品种</th>
+																	         <th>产品</th>
+																	      </tr>
+																	   </thead>
+																	   <tbody>
+																	      <tr ng-repeat="category in list">
+																	         <td>{{category.name}}</td>
+																	         <td>{{category.parenteId}}</td>
+																	         <td>{{category.status}}</td>
+																	      </tr>
+																	   </tbody></table>
+                                                   
                                                     <li><a href="shop.html"><img src="assets/img/banner/menu-1.jpg" alt=""></a></li>
                                                 </ul>
                                             </li>                                          
@@ -1527,5 +1562,6 @@
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/ajax-mail.js"></script>
         <script src="assets/js/main.js"></script>
+        <!-- <script src="assets/angularjs/angular.min.js"></script> -->
     </body>
 </html>

@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+			<title>anglurJS</title>
+			<script src="angular.min.js"></script>
+			<script>
+				 var app=angular.module('myApp',[]);
+				 app.controller('myController',function($scope){
+					 $scope.add=function(){
+						 $scope.z=parseInt($scope,x)+parseInt($scope,y);
+					 }
+				 });
+			</script>
+	</head>
+	<body ng-app="myApp" ng-controller="myController">
+		<!--{{100+100}}
+		<br>请输入你的姓名<input ng-model="myname">
+		<br>{{myname}},你好!
+		<br>-->x:<input ng-model="x" >
+            y:<input ng-model="y" >
+             <button ng-click="add()">运算</button>
+             {{z}}
+	</body>
+</html>
