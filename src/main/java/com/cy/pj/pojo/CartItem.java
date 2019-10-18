@@ -12,6 +12,7 @@ public void setProduct(Product product) {
 }
 public double getSubTotal() {
 	return subTotal;
+	
 }
 public void setSubTotal(double subTotal) {
 	this.subTotal = count*product.getPrice();
