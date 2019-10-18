@@ -1,11 +1,11 @@
-package com.cy.py.dao;
+package com.cy.pj.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import com.cy.py.pojo.Product;
+import com.cy.pj.pojo.Product;
 
 @Mapper
 public interface ProductDao {

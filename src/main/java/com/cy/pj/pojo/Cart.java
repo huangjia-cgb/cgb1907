@@ -1,4 +1,4 @@
-package com.cy.py.pojo;
+package com.cy.pj.pojo;
 
 import java.util.Collection;
 import java.util.HashMap;

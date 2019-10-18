@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.cy.py.dao.CategoryDao;
-import com.cy.py.pojo.Category;
+import com.cy.pj.dao.CategoryDao;
+import com.cy.pj.pojo.Category;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

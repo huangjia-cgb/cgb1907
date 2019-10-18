@@ -1,8 +1,8 @@
-package com.cy.py.sevice;
+package com.cy.pj.sevice;
 
 import java.util.List;
 
-import com.cy.py.pojo.Product;
+import com.cy.pj.pojo.Product;
 
 public interface ProductService {
   

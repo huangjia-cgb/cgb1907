@@ -1,13 +1,13 @@
-package com.cy.py.service.impl;
+package com.cy.pj.service.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cy.py.dao.CategoryDao;
-import com.cy.py.pojo.Category;
-import com.cy.py.sevice.CategoryService;
+import com.cy.pj.dao.CategoryDao;
+import com.cy.pj.pojo.Category;
+import com.cy.pj.sevice.CategoryService;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{

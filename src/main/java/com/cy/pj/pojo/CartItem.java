@@ -1,4 +1,4 @@
-package com.cy.py.pojo;
+package com.cy.pj.pojo;
 
 public class CartItem {
    private Product product;

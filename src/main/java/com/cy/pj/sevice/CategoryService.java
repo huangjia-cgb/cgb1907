@@ -1,8 +1,8 @@
-package com.cy.py.sevice;
+package com.cy.pj.sevice;
 
 import java.util.List;
 
-import com.cy.py.pojo.Category;
+import com.cy.pj.pojo.Category;
 
 public interface CategoryService {
 	List<Category>findCategory();
