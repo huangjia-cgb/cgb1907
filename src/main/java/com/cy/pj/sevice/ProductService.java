@@ -7,4 +7,6 @@ import com.cy.pj.pojo.Product;
 public interface ProductService {
   
 	List<Product>findAll();
+
+	Product findbyId(Integer id);
 }

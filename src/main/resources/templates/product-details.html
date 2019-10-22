@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en" >
+<html class="no-js" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -10,13 +10,14 @@
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
         <!-- All css here -->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-        <link rel="stylesheet" href="assets/css/ie7.css">
-        <link rel="stylesheet" href="assets/css/plugins.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
-        <script src="assets/angularjs/angular.min.js"></script>
+        <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/ie7.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/plugins.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+        <script th:src="@{/assets/js/vendor/modernizr-3.5.0.min.js}"></script>
+        <script th:src="@{/assets/js/angular.min.js}"></script>
+        <!-- <script src="assets/angularjs/angular.min.js"></script> -->
         
         <script type="text/javascript">
         var app=angular.module('qianguoyuan',[]);//定义模块	
@@ -30,9 +31,18 @@
 				);
 			}	        
 		});	
+        
+
         app.controller('pdController',function($scope,$http){
         	$scope.addCart=function(){
-        		$http.post('/Cart/addCart').
+        		$http.post('/cart/addCart?id=1&num=2').success(
+        		    function(resonse){
+        		    	if(resonse.state==1)
+        		    	//$scope.num=pd.num
+        		    	$scope.list=resonse.data;
+        		    	location.href="cart";
+        		    }		
+        		);
         	}
         })
 
@@ -49,9 +59,9 @@
                            <div class="ht-main-menu">
                                <nav>
                                    <ul>
-                                       <li class="active"><a href="index.html">首页</a>
+                                       <li class="active"><a th:href="@{/index}">首页</a>
                                            <ul>
-                                               <li><a href="index.html">首页</a></li>                                          
+                                               <li><a th:href="@{/index}">首页</a></li>
                                            </ul>
                                        </li>
                                        <li><a href="shop.html">分类<i class="fa fa-angle-down"></i></a>
@@ -63,16 +73,16 @@
                                                        <li><a href="shop.html">杏</a></li>
                                                        <li><a href="shop.html">李、</a></li>
                                                        <li><a href="shop.html">樱桃</a></li>
-                                                       <li><a href="shop.html"><img src="assets/img/banner/menu-1.jpg" alt=""></a></li>
+                                                       <li><a href="shop.html"><img th:src="@{/assets/img/banner/menu-1.jpg}" alt=""></a></li>
                                                    </ul>
                                                </li>                                          
                                            </ul>
                                        </li>
-                                       <li><a href="shop.html">门店<i class="fa fa-angle-down"></i></a>
-                                           <ul>
-               								<li><a href="shop.html">门店</a></li>
-                                               <li><a href="cart.html">购物车</a></li>
-                                               <li><a href="checkout.html">结算</a></li>
+                                       <li><a th:href="@{/shop}">门店<i class="fa fa-angle-down" ></i></a>
+                                           <ul ng-controller=‘MyCtrl’>
+                                               <li><a th:href="@{/shop}">门店</a></li>
+                                               <li><a th:href="@{/carts}">购物车</a></li>
+                                               <li><a th:href="@{/checkout}">结算</a></li>
                                            </ul>
                                        </li>
                                        <li><a href="blog.html">博客专栏<i class="fa fa-angle-down"></i></a>
@@ -88,7 +98,7 @@
                        </div>
                        <div class="col-lg-2 col-sm-4">
                            <div class="logo text-center">
-                               <a href="index.html"><img src="assets/img/logo/logo-white.png" alt="NatureCircle"></a>
+                               <a href="index.html"><img th:src="@{/assets/img/logo/logo-white.png}" alt="NatureCircle"></a>
                            </div>
                        </div>
                        <div class="col-lg-5 col-sm-8">
@@ -118,7 +128,7 @@
                                    <div class="cart-item-wrapper">
                                        <div class="single-cart-item">
                                            <div class="cart-img">
-                                               <a href="cart.html"><img src="assets/img/cart/1.jpg" alt=""></a>
+                                               <a href="cart.html"><img th:src="@{/assets/img/cart/1.jpg}" alt=""></a>
                                            </div>
                                            <div class="cart-text-btn">
                                                <div class="cart-text">
@@ -131,7 +141,7 @@
                                        </div>
                                        <div class="single-cart-item">
                                            <div class="cart-img">
-                                               <a href="cart.html"><img src="assets/img/cart/2.jpg" alt=""></a>
+                                               <a href="cart.html"><img th:src="@{/assets/img/cart/2.jpg}" alt=""></a>
                                            </div>
                                            <div class="cart-text-btn">
                                                <div class="cart-text">
@@ -277,32 +287,32 @@
                             <div class="tab-content product-large-image-list">
                                 <div class="tab-pane fade show active" id="product-slide1" role="tabpanel" aria-labelledby="product-slide-tab-1">
                                     <div class="single-product-img easyzoom img-full">
-                                        <a href="assets/img/product/2.jpg"><img src="assets/img/product/2.jpg" class="img-fluid" alt=""></a>
+                                        <a th:href="@{/assets/img/product/2.jpg}"><img th:src="@{/assets/img/product/2.jpg}" class="img-fluid" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="product-slide2" role="tabpanel" aria-labelledby="product-slide-tab-2">
                                     <div class="single-product-img easyzoom img-full">
-                                        <a href="assets/img/product/1.jpg"><img src="assets/img/product/1.jpg" class="img-fluid" alt=""></a>
+                                        <a th:href="@{/assets/img/product/1.jpg}"><img th:src="@{/assets/img/product/1.jpg}" class="img-fluid" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="product-slide3" role="tabpanel" aria-labelledby="product-slide-tab-3">
                                     <div class="single-product-img easyzoom img-full">
-                                        <a href="assets/img/product/4.jpg"><img src="assets/img/product/4.jpg" class="img-fluid" alt=""></a>
+                                        <a th:href="@{/assets/img/product/4.jpg}"><img th:src="@{/assets/img/product/4.jpg}" class="img-fluid" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="product-slide4" role="tabpanel" aria-labelledby="product-slide-tab-4">
                                     <div class="single-product-img easyzoom img-full">
-                                        <a href="assets/img/product/7.jpg"><img src="assets/img/product/7.jpg" class="img-fluid" alt=""></a>
+                                        <a th:href="@{/assets/img/product/7.jpg}"><img th:src="@{/assets/img/product/7.jpg}" class="img-fluid" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="product-slide5" role="tabpanel" aria-labelledby="product-slide-tab-5">
                                     <div class="single-product-img easyzoom img-full">
-                                        <a href="assets/img/product/9.jpg"><img src="assets/img/product/9.jpg" class="img-fluid" alt=""></a>
+                                        <a th:href="@{/assets/img/product/9.jpg}"><img th:src="@{/assets/img/product/9.jpg}" class="img-fluid" alt=""></a>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="product-slide6" role="tabpanel" aria-labelledby="product-slide-tab-6">
                                     <div class="single-product-img easyzoom img-full">
-                                        <a href="assets/img/product/17.jpg"><img src="assets/img/product/17.jpg" class="img-fluid" alt=""></a>
+                                        <a th:href="@{/assets/img/product/17.jpg}"><img th:src="@{/assets/img/product/17.jpg}" class="img-fluid" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -334,8 +344,9 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
-                        <div class="product-details-text">
-                            <h3>Room Decoration Items</h3>
+                        <div class="product-details-text" th:each="shops:${shop}">
+                            <span th:text="${shops.id}" style="display: none;" id="shop_id" name="shopId"></span>
+                            <h3 th:text="${shops.shopName}">Room Decoration Items</h3>
                             <div class="p-rating-review">
                                 <div class="product-rating">
                                     <i class="fa fa-star-o color"></i>
@@ -346,13 +357,13 @@
                                 </div>
                                 <a href="#" class="scroll-down">(2 customer reviews)</a>
                             </div>
-                            <h4>$98.00<span>$122.00</span></h4>
+                            <h4 th:text="${shops.shopPrice}">$98.00<span>$122.00</span></h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.</p>
                             <h5><i class="fa fa-check"></i>150 in stock</h5>
                             <form  ng-submit="submitForm()" ng-controller="pdController">
                                 <div class="add-cart-product">
                                     <input type="number" placeholder="1" ng-model="pd.num">
-                                    <button type="submit" class="default-btn">加入购物车</button>
+                                    <button type="submit" class="default-btn" ng-click="addCart()" onclick="addToCart(this)">加入购物车</button>
                                     <button type="button"><i class="icon icon-Heart"></i></button>
                                     <button type="button"><i class="icon icon-Restart"></i></button>
                                 </div>
@@ -409,7 +420,7 @@
                                     <h3>2 reviews for Ornare sed consequat</h3>
                                     <div class="single-review-item">
                                         <div class="review-logo">
-                                            <img src="assets/img/icon/logo.jpg" alt="">
+                                            <img th:src="@{/assets/img/icon/logo.jpg}" alt="">
                                         </div>
                                         <div class="p-review-text">
                                             <div class="rating-number">
@@ -425,7 +436,7 @@
                                     </div>
                                     <div class="single-review-item">
                                         <div class="review-logo">
-                                            <img src="assets/img/icon/logo.jpg" alt="">
+                                            <img th:src="@{/assets/img/icon/logo.jpg}" alt="">
                                         </div>
                                         <div class="p-review-text">
                                             <div class="rating-number">
@@ -469,7 +480,7 @@
             <div class="container">
                 <div class="section-title text-center">
                     <div class="section-img d-flex justify-content-center">
-                        <img src="assets/img/icon/title.png" alt="">
+                        <img th:src="@{/assets/img/icon/title.png}" alt="">
                     </div>
                     <h2><span>Organic </span>Related products</h2>
                 </div>
@@ -480,7 +491,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/20.jpg" alt="">
+                                    <img th:src="@{/assets/img/product/20.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -490,7 +501,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/20.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/20.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -515,7 +526,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/2.jpg" alt="">
+                                    <img th:src="@{/assets/img/product/2.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -525,7 +536,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/2.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/2.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -550,7 +561,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/3.jpg" alt="">
+                                    <img th:src="@{/assets/img/product/3.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -560,7 +571,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/3.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/3.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -585,7 +596,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/4.jpg" alt="">
+                                    <img th:src="@{/assets/img/product/4.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -595,7 +606,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/4.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/4.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -620,7 +631,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/5.jpg" alt="">
+                                    <img th:src="@{/assets/img/product/5.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -630,7 +641,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/5.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/5.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -655,7 +666,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/6.jpg" alt="">
+                                    <img th:src="@{/assets/img/product/6.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -665,7 +676,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/6.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/6.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -690,7 +701,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/7.jpg" alt="">
+                                    <img th:src="@{/assets/img/product/7.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -700,7 +711,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/7.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/7.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -725,7 +736,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/8.jpg" alt="">
+                                    <img th:href="@{/assets/img/product/8.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -735,7 +746,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/8.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/8.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -760,7 +771,7 @@
                         <div class="single-product-item">
                             <div class="product-image">
                                 <a href="shop.html">
-                                    <img src="assets/img/product/9.jpg" alt="">
+                                    <img th:href="@{/assets/img/product/9.jpg}" alt="">
                                 </a>  
                                 <div class="product-hover">
                                     <ul class="hover-icon-list">
@@ -770,7 +781,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/9.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/9.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -805,7 +816,7 @@
                                         <li>
                                             <a href="#"><i class="icon icon-Restart"></i></a>
                                         </li>
-                                        <li><a href="assets/img/product/10.jpg" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
+                                        <li><a th:href="@{/assets/img/product/10.jpg}" data-toggle="modal" data-target="#productModal"><i class="icon icon-Search"></i></a></li>
                                     </ul>
                                     <button type="button" class="p-cart-btn">Add to cart</button>
                                 </div>
@@ -870,7 +881,7 @@
                                          <div class="col-lg-4 col-md-4">
                                              <div class="single-service">
                                                  <div class="service-image">
-                                                     <img src="assets/img/icon/rocket.png" alt="">
+                                                     <img th:src="@{/assets/img/icon/rocket.png}" alt="">
                                                  </div>
                                                  <div class="service-text">
                                                      <h3>免费配送</h3>
@@ -881,7 +892,7 @@
                                          <div class="col-lg-4 col-md-4">
                                              <div class="single-service">
                                                  <div class="service-image">
-                                                     <img src="assets/img/icon/money.png" alt="">
+                                                     <img th:src="@{/assets/img/icon/money.png}" alt="">
                                                  </div>
                                                  <div class="service-text">
                                                      <h3>安全提示</h3>
@@ -892,7 +903,7 @@
                                          <div class="col-lg-4 col-md-4">
                                              <div class="single-service">
                                                  <div class="service-image">
-                                                     <img src="assets/img/icon/support.png" alt="">
+                                                     <img th:src="@{/assets/img/icon/support.png}" alt="">
                                                  </div>
                                                  <div class="service-text">
                                                      <h3>实时在线</h3>
@@ -952,28 +963,28 @@
                                          <h3>照片墙</h3>
                                          <div class="instagram-image">
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/1.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/1.jpg}" alt="">
                                              </div>
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/2.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/2.jpg}" alt="">
                                              </div>
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/3.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/3.jpg}" alt="">
                                              </div>
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/4.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/4.jpg}" alt="">
                                              </div>
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/5.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/5.jpg}" alt="">
                                              </div>
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/6.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/6.jpg}" alt="">
                                              </div>
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/7.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/7.jpg}" alt="">
                                              </div>
                                              <div class="single-insta-img">
-                                                 <img src="assets/img/instagram/8.jpg" alt="">
+                                                 <img th:src="@{/assets/img/instagram/8.jpg}" alt="">
                                              </div>
                                          </div>
                                          Follow our instagram <i class="fa fa-angle-double-right"></i>
@@ -991,12 +1002,12 @@
                          <div class="row">
                              <div class="col-lg-6 d-flex col-md-6">
                                  <div class="footer-text-bottom">
-                                     <p>Copyright &copy; <a href="http://www.17sucai.com/">CGB1907-达内武汉洪山中心</a>. All Rights Reserved</p>
+                                     <p>Copyright &copy; <a th:href="@{http://www.17sucai.com/}">CGB1907-达内武汉洪山中心</a>. All Rights Reserved</p>
                                  </div>
                              </div>
                              <div class="col-lg-6 col-md-6">
                                  <div class="payment-img d-flex justify-content-end">
-                                     <img src="assets/img/payment.png" alt="">
+                                     <img th:src="@{/assets/img/payment.png}" alt="">
                                  </div>
                              </div>
                          </div>
@@ -1016,32 +1027,32 @@
                             <div class="tab-content product-details-large" id="myTabContent">
                                 <div class="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
                                     <div class="single-product-img">
-                                        <img src="assets/img/product/1.jpg" alt="">
+                                        <img th:src="@{/assets/img/product/1.jpg}" alt="">
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
                                     <div class="single-product-img">
-                                        <img src="assets/img/product/2.jpg" alt="">
+                                        <img th:src="@{/assets/img/product/2.jpg}" alt="">
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
                                     <div class="single-product-img">
-                                        <img src="assets/img/product/3.jpg" alt="">
+                                        <img th:src="@{/assets/img/product/3.jpg}" alt="">
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
                                     <div class="single-product-img">
-                                        <img src="assets/img/product/4.jpg" alt="">
+                                        <img th:src="@{/assets/img/product/4.jpg}" alt="">
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="single-slide5" role="tabpanel" aria-labelledby="single-slide-tab-5">
                                     <div class="single-product-img">
-                                        <img src="assets/img/product/5.jpg" alt="">
+                                        <img th:src="@{/assets/img/product/5.jpg}" alt="">
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="single-slide6" role="tabpanel" aria-labelledby="single-slide-tab-6">
                                     <div class="single-product-img">
-                                        <img src="assets/img/product/6.jpg" alt="">
+                                        <img th:src="@{/assets/img/product/6.jpg}" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -1051,19 +1062,19 @@
                                         <a class="active" data-toggle="tab" id="single-slide-tab-1" href="#single-slide1"><img src="assets/img/product/1.jpg" alt=""></a>
                                     </div>
                                     <div class="single-tab-menu">
-                                        <a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img src="assets/img/product/2.jpg" alt=""></a>
+                                        <a data-toggle="tab" id="single-slide-tab-2" href="#single-slide2"><img th:src="@{/assets/img/product/2.jpg}" alt=""></a>
                                     </div>
                                     <div class="single-tab-menu">
-                                        <a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img src="assets/img/product/3.jpg" alt=""></a>
+                                        <a data-toggle="tab" id="single-slide-tab-3" href="#single-slide3"><img th:src="@{/assets/img/product/3.jpg}" alt=""></a>
                                     </div>
                                     <div class="single-tab-menu">
-                                        <a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img src="assets/img/product/4.jpg" alt=""></a>
+                                        <a data-toggle="tab" id="single-slide-tab-4" href="#single-slide4"><img th:src="@{/assets/img/product/4.jpg}" alt=""></a>
                                     </div>
                                     <div class="single-tab-menu">
-                                        <a data-toggle="tab" id="single-slide-tab-5" href="#single-slide5"><img src="assets/img/product/5.jpg" alt=""></a>
+                                        <a data-toggle="tab" id="single-slide-tab-5" href="#single-slide5"><img th:src="@{/assets/img/product/5.jpg}" alt=""></a>
                                     </div>
                                     <div class="single-tab-menu">
-                                        <a data-toggle="tab" id="single-slide-tab-6" href="#single-slide6"><img src="assets/img/product/6.jpg" alt=""></a>
+                                        <a data-toggle="tab" id="single-slide-tab-6" href="#single-slide6"><img th:src="@{/assets/img/product/6.jpg}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -1106,11 +1117,34 @@
         <!-- END QUICKVIEW PRODUCT -->
         
         <!-- All js here -->
-        <script src="assets/js/vendor/jquery-3.2.1.min.js"></script>
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/plugins.js"></script>
-        <script src="assets/js/ajax-mail.js"></script>
-        <script src="assets/js/main.js"></script>
+        <script th:src="@{/assets/js/vendor/jquery-3.2.1.min.js}"></script>
+        <script th:src="@{/assets/js/popper.min.js}"></script>
+        <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+        <script th:src="@{/assets/js/plugins.js}"></script>
+        <script th:src="@{/assets/js/ajax-mail.js}"></script>
+        <script th:src="@{/assets/js/main.js}"></script>
+        <script th:src="@{/assets/js/angular.min.js}"></script>
     </body>
+<script>
+    function addToCart(event) {
+        var id = $(event).parents().children("span").eq(0).html();
+        var obj = {
+            id:id
+        };
+        $.ajax({
+            type:"POST",
+            url:"/getId",
+            contentType:"application/json",
+            data:JSON.stringify(obj),
+            // dataType:"json",
+            async: false,
+            success:function (data) {
+                alert("收藏成功！");
+            },
+            error:function (data) {
+                alert("收藏失败！");
+            }
+        })
+    }
+</script>
 </html>

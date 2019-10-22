@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -46,11 +46,11 @@
                                                 </li>                                          
                                             </ul>
                                         </li>
-                                        <li><a href="shop.html">门店<i class="fa fa-angle-down"></i></a>
+                                        <li><a th:href="@{/shop}">门店<i class="fa fa-angle-down" ></i></a>
                                             <ul>
-                                				<li><a href="shop.html">门店</a></li>
-                                                <li><a href="cart.html">购物车</a></li>
-                                                <li><a href="checkout.html">结算</a></li>
+                                                <li><a th:href="@{/shop}">门店</a></li>
+                                                <li><a th:href="@{/carts}">购物车</a></li>
+                                                <li><a th:href="@{/checkout}">结算</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="blog.html">博客专栏<i class="fa fa-angle-down"></i></a>
@@ -91,31 +91,18 @@
                                  <div class="cart-wrapper">
                                      <a href="#">
                                          <i class="icon icon-FullShoppingCart"></i>
-                                         <span>2</span>
+                                         <span th:text="${count}">2</span>
                                      </a>
                                     <div class="cart-item-wrapper">
-                                        <div class="single-cart-item">
+                                        <div class="single-cart-item" th:each="shopTwo:${shopTwo}">
                                             <div class="cart-img">
                                                 <a href="cart.html"><img src="assets/img/cart/1.jpg" alt=""></a>
                                             </div>
                                             <div class="cart-text-btn">
                                                 <div class="cart-text">
-                                                    <h5><a href="cart.html">Fresh Fruit Juice</a></h5>
+                                                    <h5><a href="cart.html" th:text="${shopTwo.shopName}">Fresh Fruit Juice</a></h5>
                                                     <span class="cart-qty">×1</span>
-                                                    <span class="cart-price">$68.00</span>
-                                                </div>
-                                                <button type="button"><i class="fa fa-close"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="assets/img/cart/2.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text-btn">
-                                                <div class="cart-text">
-                                                    <h5><a href="cart.html">Fresh Vegetables</a></h5>
-                                                    <span class="cart-qty">×1</span>
-                                                    <span class="cart-price">$98.00</span>
+                                                    <span class="cart-price" th:text="${shopTwo.shopPrice}">$68.00</span>
                                                 </div>
                                                 <button type="button"><i class="fa fa-close"></i></button>
                                             </div>
@@ -127,8 +114,8 @@
                                             </div>
                                         </div>
                                         <div class="cart-links">
-                                            <a href="cart.html">查看购物车</a>
-                                            <a href="checkout.html">结账</a>
+                                            <a th:href="@{/carts}">查看购物车</a>
+                                            <a th:href="@{/checkout}">结账</a>
                                         </div>
                                     </div>
                                  </div>
@@ -142,15 +129,15 @@
                      <div class="mobile-menu container">
                          <nav id="mobile-menu-active">
                              <ul class="menu-overflow">
-                                 <li><a href="index.html">首页</a>
+                                 <li><a th:href="@{/index}">首页</a>
                                      <ul>
-                                         <li><a href="index.html">首页</a></li>
+                                         <li><a th:href="@{/index}">首页</a></li>
                                      </ul>
                                  </li>
-                                 <li><a href="shop.html">门店</a>
+                                 <li><a th:href="@{/shop}">门店</a>
                                      <ul>
-                                         <li><a href="cart.html">购物车</a></li>
-                                         <li><a href="checkout.html">订单结算</a></li>
+                                         <li><a th:href="@{/carts}">购物车</a></li>
+                                         <li><a th:href="@{/checkout}">订单结算</a></li>
                                          <li><a href="product-details.html">门店详情</a></li>
                                      </ul>
                                  </li>
@@ -280,7 +267,7 @@
         <!-- checkout-area start -->
         <div class="checkout-area pb-90">
             <div class="container">
-                <form action="#">
+                <form action="/alipay/page/gotoPayPage" method="post">
                     <div class="row">
                         <div class="col-lg-6 col-md-12 col-sm-12">
                             <div class="checkbox-form">						
@@ -481,7 +468,7 @@
                                             <tr class="order-total">
                                                 <th>Order Total</th>
                                                 <td>
-                                                    <strong><span class="amount">$215.00</span></strong>
+                                                    <strong><span class="amount" th:text="${total}">$215.00</span></strong>
                                                 </td>
                                             </tr>								
                                         </tfoot>
@@ -514,7 +501,8 @@
                                         </div>
                                     </div>
                                     <div class="order-button-payment">
-                                        <input class="default-btn" type="submit" value="Place order" />
+                                        <!--<input class="default-btn" type="submit" value="Place order" />-->
+                                        <button style="width: 100%; height: 60px; alignment: center; background: #b49e8f" type="submit">立即支付</button>
                                     </div>
                                 </div>
                             </div>

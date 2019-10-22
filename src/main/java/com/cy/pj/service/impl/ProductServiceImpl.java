@@ -20,6 +20,13 @@ public class ProductServiceImpl implements ProductService{
 		
 		return productDao.findAll();
 	}
+
+	@Override
+	public Product findbyId(Integer id) {
+		Product product = productDao.findById(id);
+		
+		return product;
+	}
 	
 
 }

@@ -12,4 +12,6 @@ public interface ProductDao {
 	
      @Select("select * from product")
 	List<Product>findAll();
+     @Select("select * from product where id=#{id}")
+	Product findById(Integer id);
 }

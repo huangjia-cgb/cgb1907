@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -16,9 +16,38 @@
         <link rel="stylesheet" href="assets/css/plugins.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
-        <script type="text/javascript" src="angularjs/angular.min.js"></script>
+        <script src="assets/js/angular.min.js"></script>
+         <script type="text/javascript">
+        var app=angular.module('qianguoyuan',[]);//定义模块	
+		app.controller('categoryController' ,function($scope,$http){
+	        //读取列表数据绑定到表单中  
+			$scope.findAllCategory=function(){
+				$http.get('/Category/findAllCategory').success(
+					function(response){
+						$scope.list=response;
+					}			
+				);
+			}	        
+		});	
+        app.controller('pdController',function($scope,$http){
+        	$scope.addCart=function(){
+        		$http.post('/cart/addCart?id=1&num=2').success(
+        		    function(resonse){
+        		    	if(resonse.state==1)
+        		    	//$scope.num=pd.num
+        		    	$scope.list=resonse.data;
+        		    	location.href="cart";
+        		    }		
+        		);
+        	}
+        })
+       
+        
+        
+        </script>
+        
     </head>
-    <body  ng-app="pinyougou"   ng-controller="brandController" >
+    <body  ng-app="qianguoyuan" >
         
         <!-- Header Area Start -->
         <header class="header-area header-sticky">
@@ -28,9 +57,9 @@
                        <div class="ht-main-menu">
                           <nav>
                               <ul>
-                                  <li class="active"><a href="index.html">首页</a>
+                                  <li><a th:href="@{/index}">首页</a>
                                       <ul>
-                                          <li><a href="index.html">首页</a></li>                                          
+                                          <li><a th:href="@{/index}">首页</a></li>
                                       </ul>
                                   </li>
                                   <li><a href="shop.html">分类<i class="fa fa-angle-down"></i></a>
@@ -47,11 +76,11 @@
                                           </li>                                          
                                       </ul>
                                   </li>
-                                  <li><a href="shop.html">门店<i class="fa fa-angle-down"></i></a>
+                                  <li><a th:href="@{/shop}">门店<i class="fa fa-angle-down" ></i></a>
                                       <ul>
-                          				<li><a href="shop.html">门店</a></li>
-                                          <li><a href="cart.html">购物车</a></li>
-                                          <li><a href="checkout.html">结算</a></li>
+                                          <li><a th:href="@{/shop}">门店</a></li>
+                                          <li><a th:href="@{/carts}">购物车</a></li>
+                                          <li><a th:href="@{/checkout}">结算</a></li>
                                       </ul>
                                   </li>
                                   <li><a href="blog.html">博客专栏<i class="fa fa-angle-down"></i></a>
@@ -92,31 +121,18 @@
                            <div class="cart-wrapper">
                                <a href="#">
                                    <i class="icon icon-FullShoppingCart"></i>
-                                   <span>2</span>
+                                   <span th:text="${count}">2</span>
                                </a>
                               <div class="cart-item-wrapper">
-                                  <div class="single-cart-item">
+                                  <div class="single-cart-item" th:each="shopTwo:${shopTwo}">
                                       <div class="cart-img">
                                           <a href="cart.html"><img src="assets/img/cart/1.jpg" alt=""></a>
                                       </div>
                                       <div class="cart-text-btn">
                                           <div class="cart-text">
-                                              <h5><a href="cart.html">Fresh Fruit Juice</a></h5>
+                                              <h5><a href="cart.html" th:text="${shopTwo.shopName}">Fresh Fruit Juice</a></h5>
                                               <span class="cart-qty">×1</span>
-                                              <span class="cart-price">$68.00</span>
-                                          </div>
-                                          <button type="button"><i class="fa fa-close"></i></button>
-                                      </div>
-                                  </div>
-                                  <div class="single-cart-item">
-                                      <div class="cart-img">
-                                          <a href="cart.html"><img src="assets/img/cart/2.jpg" alt=""></a>
-                                      </div>
-                                      <div class="cart-text-btn">
-                                          <div class="cart-text">
-                                              <h5><a href="cart.html">Fresh Vegetables</a></h5>
-                                              <span class="cart-qty">×1</span>
-                                              <span class="cart-price">$98.00</span>
+                                              <span class="cart-price" th:text="${shopTwo.shopPrice}">$68.00</span>
                                           </div>
                                           <button type="button"><i class="fa fa-close"></i></button>
                                       </div>
@@ -124,12 +140,12 @@
                                   <div class="cart-price-total">
                                       <div class="cart-price-info d-flex justify-content-between">
                                           <span>总金额 :</span>
-                                          <span>$166.00</span>
+                                          <span th:text="${price}">$166.00</span>
                                       </div>
                                   </div>
                                   <div class="cart-links">
-                                      <a href="cart.html">查看购物车</a>
-                                      <a href="checkout.html">结账</a>
+                                      <a th:href="@{/carts}">查看购物车</a>
+                                      <a th:href="@{/checkout}">结账</a>
                                   </div>
                               </div>
                            </div>
@@ -143,16 +159,16 @@
                <div class="mobile-menu container">
                    <nav id="mobile-menu-active">
                        <ul class="menu-overflow">
-                           <li><a href="index.html">首页</a>
+                           <li><a th:href="@{/index}">首页</a>
                                <ul>
-                                   <li><a href="index.html">首页</a></li>
+                                   <li><a th:href="@{/index}">首页</a></li>
                                </ul>
                            </li>
-                           <li><a href="shop.html">门店</a>
-                               <ul>
+                           <li><a th:href="@{/shop}">门店<i class="fa fa-angle-down" ></i></a>
+                               <ul ng-controller=‘MyCtrl’>
+                                   <li><a th:href="@{/shop}">门店</a></li>
                                    <li><a href="cart.html">购物车</a></li>
-                                   <li><a href="checkout.html">订单结算</a></li>
-                                   <li><a href="product-details.html">门店详情</a></li>
+                                   <li><a th:href="@{/checkout}">结算</a></li>
                                </ul>
                            </li>
                            <li><a href="blog.html">博客</a>
@@ -260,24 +276,17 @@
                                 <th class="table-delete">删除商品</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="table-remove"><button><input type="checkbox" value=""></button></td>
+                        <tbody >
+                            <tr th:each="carts:${carts}">
+                                <td class="table-p-price" style="display:none;" th:text="${carts.id}"></td>
+                                <!--<td class="table-remove"><button><input type="checkbox" value="" name="checkbox[]"></button></td>-->
+                                <td><input type="checkbox" class="table-remove" name="checkbox[]" value="" onclick="checked_price()"/></td>
                                 <td class="table-image"><a href="product-details.html"><img src="assets/img/product/3.jpg" alt=""></a></td>
-                                <td class="table-p-name"><a href="product-details.html">Habitasse dictumst</a></td>
-                                <td class="table-p-price"><p>$65.00</p></td>
+                                <td class="table-p-name"><a href="product-details.html" th:text="${carts.shopName}"></a></td>
+                                <td class="table-p-price"><p th:text="${carts.shopPrice}"></p></td>
                                 <td class="table-p-qty"><input value="1" name="cart-qty" type="number"></td>
                                 <td class="table-total"><p>$65.00</p></td>
-                                <td class="table-remove"><button><i class="fa fa-trash"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td class="table-remove"><button><input type="checkbox" value=""></button></td>
-                                <td class="table-image"><a href="product-details.html"><img src="assets/img/product/4.jpg" alt=""></a></td>
-                                <td class="table-p-name"><a href="product-details.html">Kaoreet lobortis</a></td>
-                                <td class="table-p-price"><p>$95.00</p></td>
-                                <td class="table-p-qty"><input value="1" name="cart-qty" type="number"></td>
-                                <td class="table-total"><p>$95.00</p></td>
-                                <td class="table-remove"><button><i class="fa fa-trash"></i></button></td>
+                                <td class="table-remove"><button onclick="delete_shop(this)"><i class="fa fa-trash"></i></button></td>
                             </tr>
                            
                         </tbody>
@@ -311,9 +320,9 @@
                             </div>
                             <div class="single-total-content d-flex justify-content-between">
                                 <span>Total</span>
-                                <span class="c-total-price">$165.00</span>
+                                <span id="change_price" class="c-total-price" th:text="${price}">$165.00</span>
                             </div>
-                            <a href="checkout.html">Proceed to checkout</a>
+                            <a th:href="@{/checkout}" onclick="settle()">结账</a>
                         </div>
                     </div>
                 </div>
@@ -504,4 +513,68 @@
         <script src="assets/js/ajax-mail.js"></script>
         <script src="assets/js/main.js"></script>
     </body>
+<script>
+    function checked_price() {
+        var checkall=document.getElementsByName("checkbox[]");
+        var td = document.getElementsByTagName("td");
+        var total_price = document.getElementById("change_price");
+        var priceId = [];
+        var num = 0;
+        var price = 0;
+        for (var i=0;i<checkall.length;i++){
+            if (checkall[i].checked == true){
+                var number = i * 8;
+                var price_number = i * 8 + 4;
+                var id = td[number].innerHTML;
+                price += parseInt(td[price_number].innerText);
+                priceId[num] = id;
+                num++;
+            }
+        }
+        total_price.innerText = price.toString();
+    }
+    function settle() {
+        var checkall=document.getElementsByName("checkbox[]");
+        var td = document.getElementsByTagName("td");
+        var priceId = [];
+        var num = 0;
+        for (var i=0;i<checkall.length;i++){
+            if (checkall[i].checked == true){
+                var number = i * 8;
+                var id = td[number].innerHTML;
+                priceId[num] = id;
+                num++;
+            }
+        }
+        $.ajax({
+            type:"post",
+            url:"/price",
+            data:{
+                id:priceId
+            },
+            async:false
+        })
+    }
+    function delete_shop(event) {
+        var id = $(event).parents().children("td").eq(0).html();
+        var obj = {
+            id:id,
+        };
+        $.ajax({
+            type:"POST",
+            url:"/deleteCarts",
+            contentType:"application/json",
+            data:JSON.stringify(obj),
+            // dataType:"json",
+            async: false,
+            success:function (data) {
+                alert("删除成功！");
+                window.location.reload();
+            },
+            error:function (data) {
+                alert("出错了！");
+            }
+        })
+    }
+</script>
 </html>
