@@ -35,5 +35,6 @@ public class Test {
             name=stu.name;
         }
         System.out.println(result.total);
+         System.out.println(result.name);
     }
 }
